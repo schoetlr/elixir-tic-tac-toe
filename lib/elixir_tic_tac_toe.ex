@@ -40,11 +40,13 @@ defmodule ElixirTicTacToe do
         print_board(board)
         #get move
         #validate move
+        manage_move(player, board)
         #update board
         #check for winner and determine status
         status = :playing
-        player = :o 
+         
         #determine player
+        player = :o
 
         execute_turn(status, player, board)
 
@@ -58,6 +60,30 @@ defmodule ElixirTicTacToe do
       end
 
       Enum.each(board, print_line)
+  end
+
+  #this gets and validates a move, if move is invalid then retry
+  def manage_move(player, board) do
+    IO.puts "Player #{player}'s turn"
+    move = get_move
+
+    if valid_move?(move, board) do 
+      move
+    else
+      manage_move(player, board)
+    end
+  end
+
+  #returns tuple of row, col
+  def get_move do
+    row = IO.gets("Enter the row: 0-2 ") |> String.trim_trailing |> String.to_integer
+    col = IO.gets("Enter the col: 0-2 ") |> String.trim_trailing |> String.to_integer
+
+    {row, col}
+  end
+
+  def valid_move?(player, board) do 
+    true
   end
 
 end
