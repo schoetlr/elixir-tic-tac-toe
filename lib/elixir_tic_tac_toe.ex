@@ -36,6 +36,8 @@ defmodule ElixirTicTacToe do
         IO.puts "Game Over"
       :playing -> 
         IO.puts "Playing"
+        #print the board
+        print_board(board)
         #get move
         #validate move
         #update board
@@ -47,7 +49,15 @@ defmodule ElixirTicTacToe do
         execute_turn(status, player, board)
 
     end
-
-    #if status is ongoing then take another turn with updated state
   end
+
+  def print_board(board) do 
+      print_line = fn {key, row} ->
+        output = "#{row[0]} #{row[1]} #{row[2]}"
+        IO.puts output
+      end
+
+      Enum.each(board, print_line)
+  end
+
 end
