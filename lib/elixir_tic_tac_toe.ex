@@ -33,7 +33,9 @@ defmodule ElixirTicTacToe do
     case status do 
       :game_over -> 
         #determine winner
+        print_board(board)
         IO.puts "Game Over"
+        IO.puts "Player #{player} wins"
       :playing -> 
         #print the board
         print_board(board)
@@ -51,6 +53,8 @@ defmodule ElixirTicTacToe do
         #determine player
         player = if status == :playing do
           switch_player(player)
+        else
+          player
         end
 
         execute_turn(status, player, board)
@@ -59,11 +63,15 @@ defmodule ElixirTicTacToe do
   end
 
   def game_status(board) do 
-    if horizontal_win?(board) || vertical_win?(board) || diagonal_win?(board) do
+    if game_over?(board) do
       :game_over
     else
       :playing
     end
+  end
+
+  def game_over?(board) do 
+    horizontal_win?(board) || vertical_win?(board) || diagonal_win?(board)
   end
 
   def horizontal_win?(board) do 
@@ -77,7 +85,24 @@ defmodule ElixirTicTacToe do
   end
 
   def vertical_win?(board) do 
-    false
+    #thought about looping to do this but it got pretty convoluted so stuck to with this ?procedural? solution
+
+    cond do 
+      board[0][0] == :x && board[1][0] == :x && board[2][0] == :x ->
+        true
+      board[0][1] == :x && board[1][1] == :x && board[2][1] == :x ->
+        true
+      board[0][2] == :x && board[1][2] == :x && board[2][2] == :x ->
+        true
+      board[0][0] == :o && board[1][0] == :o && board[2][0] == :o ->
+        true
+      board[0][1] == :o && board[1][1] == :o && board[2][1] == :o ->
+        true
+      board[0][2] == :o && board[1][2] == :o && board[2][2] == :o ->
+        true
+      true ->
+        false
+    end
   end
 
   def diagonal_win?(board) do 
