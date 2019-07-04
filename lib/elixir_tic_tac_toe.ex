@@ -46,14 +46,42 @@ defmodule ElixirTicTacToe do
         board = update_board(move, player, board)
 
         #check for winner and determine status
-        status = :playing
-         
+        status = game_status(board)
+        
         #determine player
-        player = switch_player(player)
+        player = if status == :playing do
+          switch_player(player)
+        end
 
         execute_turn(status, player, board)
 
     end
+  end
+
+  def game_status(board) do 
+    if horizontal_win?(board) || vertical_win?(board) || diagnol_win?(board) do
+      :game_over
+    else
+      :playing
+    end
+  end
+
+  def horizontal_win?(board) do 
+    Enum.any?(board, fn {k, row} -> 
+      Enum.all?(row, fn{k, val} ->
+        val == :x
+      end) || Enum.all?(row, fn {k, val} ->
+        val == :o
+      end) 
+    end)
+  end
+
+  def vertical_win?(board) do 
+    false
+  end
+
+  def diagnol_win?(board) do 
+    false
   end
 
   def switch_player(player) do 
@@ -74,7 +102,7 @@ defmodule ElixirTicTacToe do
   #this gets and validates a move, if move is invalid then retry
   def manage_move(player, board) do
     IO.puts "Player #{player}'s turn"
-    move = get_move
+    move = get_move()
 
     if valid_move?(move, board) do 
       move
