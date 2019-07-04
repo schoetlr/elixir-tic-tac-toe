@@ -35,22 +35,31 @@ defmodule ElixirTicTacToe do
         #determine winner
         IO.puts "Game Over"
       :playing -> 
-        IO.puts "Playing"
         #print the board
         print_board(board)
+        
         #get move
         #validate move
-        manage_move(player, board)
+        move = manage_move(player, board)
+
         #update board
+        board = update_board(move, player, board)
+
         #check for winner and determine status
         status = :playing
          
         #determine player
-        player = :o
+        player = switch_player(player)
 
         execute_turn(status, player, board)
 
     end
+  end
+
+  def switch_player(player) do 
+    player_swapper = %{:x => :o, :o => :x}
+    player = player_swapper[player]
+
   end
 
   def print_board(board) do 
@@ -82,8 +91,25 @@ defmodule ElixirTicTacToe do
     {row, col}
   end
 
-  def valid_move?(player, board) do 
-    true
+  def valid_move?(move, board) do 
+    {row, col} = move
+    current_pos = board[row][col]
+
+    cond do 
+      row > 2 || col > 2 ->
+        false
+      row < 0 || col < 0 ->
+        false
+      current_pos != "_" ->
+        false
+      true -> true
+    end
+  end
+
+  def update_board(move, player, board) do 
+    {row, col} = move
+
+    put_in(board, [row, col], player)
   end
 
 end
