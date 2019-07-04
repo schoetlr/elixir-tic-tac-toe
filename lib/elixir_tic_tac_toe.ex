@@ -59,7 +59,7 @@ defmodule ElixirTicTacToe do
   end
 
   def game_status(board) do 
-    if horizontal_win?(board) || vertical_win?(board) || diagnol_win?(board) do
+    if horizontal_win?(board) || vertical_win?(board) || diagonal_win?(board) do
       :game_over
     else
       :playing
@@ -80,8 +80,19 @@ defmodule ElixirTicTacToe do
     false
   end
 
-  def diagnol_win?(board) do 
-    false
+  def diagonal_win?(board) do 
+    cond do 
+      board[0][0] == :x && board[1][1] == :x && board[2][2] == :x ->
+        true
+      board[0][2] == :x && board[1][1] == :x && board[2][0] == :x ->
+        true
+      board[0][0] == :o && board[1][1] == :o && board[2][2] == :o ->
+        true
+      board[0][2] == :o && board[1][1] == :o && board[2][0] == :o ->
+        true
+      true ->
+        false
+    end
   end
 
   def switch_player(player) do 
