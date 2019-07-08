@@ -1,6 +1,6 @@
 # ElixirTicTacToe
 
-**TODO: Add description**
+This is a TicTacToe CLI game made in Elixir for learning purposes.  Everything is in one module.  Thought about splitting stuff like rendering and end-game logic in to their own modules, and may do so in the future.  
 
 ## Installation
 
