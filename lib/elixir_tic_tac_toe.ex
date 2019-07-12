@@ -16,6 +16,7 @@ defmodule ElixirTicTacToe do
   def hello do
     :world
   end
+  #the above boilerplate is just here so I have an example of how the documentation works
 
   def play() do
     #define the board
