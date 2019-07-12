@@ -1,5 +1,5 @@
 defmodule ElixirTicTacToe.EndGameLogic do
-  
+
   def game_status(board) do 
     if game_over?(board) do
       :game_over
