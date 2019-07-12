@@ -9,14 +9,22 @@ defmodule ElixirTicTacToe.EndGameLogic do
   end
 
   def game_over?(board) do 
-    horizontal_win?(board) || vertical_win?(board) || diagonal_win?(board)
+    horizontal_win?(board) || vertical_win?(board) || diagonal_win?(board) || board_full?(board)
+  end
+
+  def board_full?(board) do 
+    Enum.all?(board, fn {k, row} -> 
+      Enum.all?(row, fn{k, val} ->
+        val == :x || val == :o
+      end) 
+    end)
   end
 
   def horizontal_win?(board) do 
     Enum.any?(board, fn {k, row} -> 
-      Enum.all?(row, fn{k, val} ->
+      Enum.all?(row, fn{_k, val} ->
         val == :x
-      end) || Enum.all?(row, fn {k, val} ->
+      end) || Enum.all?(row, fn {_k, val} ->
         val == :o
       end) 
     end)

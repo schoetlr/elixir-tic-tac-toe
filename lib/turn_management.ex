@@ -7,8 +7,13 @@ defmodule ElixirTicTacToe.TurnManagement do
       :game_over -> 
         #determine winner
         print_board(board)
+
         IO.puts "Game Over"
-        IO.puts "Player #{player} wins"
+        if board_full?(board) do 
+          IO.puts "Catz Game"
+        else
+          IO.puts "Player #{player} wins"
+        end
       :playing -> 
         #print the board
         print_board(board)
@@ -37,17 +42,16 @@ defmodule ElixirTicTacToe.TurnManagement do
 
   def switch_player(player) do 
     player_swapper = %{:x => :o, :o => :x}
-    player = player_swapper[player]
-
+    player_swapper[player]
   end
 
   def print_board(board) do 
-      print_line = fn {key, row} ->
-        output = "#{row[0]} #{row[1]} #{row[2]}"
-        IO.puts output
-      end
+    print_line = fn {_key, row} ->
+      output = "#{row[0]} #{row[1]} #{row[2]}"
+      IO.puts output
+    end
 
-      Enum.each(board, print_line)
+    Enum.each(board, print_line)
   end
 
   #this gets and validates a move, if move is invalid then retry
